@@ -113,4 +113,31 @@ class Currency extends \yarcode\base\ActiveRecord
     {
         return static::findOne(['system_name' => $systemName]);
     }
+
+    /**
+     * @param $currency
+     * @return Currency
+     */
+    public static function resolve($currency)
+    {
+        if($currency instanceof static) {
+            return $currency;
+        }
+
+        $model = null;
+
+        if(is_integer($currency)) {
+            $model = static::findOne($currency);
+        }
+
+        if(is_string($currency)) {
+            $model = static::findBySystemName($currency);
+        }
+
+        if(null === $model) {
+            throw new \InvalidArgumentException(Yii::t('exceptions', 'Invalid currency'));
+        }
+        
+        return $model;
+    }
 }
