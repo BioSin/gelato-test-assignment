@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use yarcode\base\ActiveRecord;
 use Yii;
 
 /**
@@ -13,7 +14,7 @@ use Yii;
  * @property integer $measure_unit
  * @property string $price
  */
-class Product extends \yii\db\ActiveRecord
+class Product extends ActiveRecord
 {
     /**
      * @inheritdoc
