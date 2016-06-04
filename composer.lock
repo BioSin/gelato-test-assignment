@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "914f9194a4d021de88b285b03e683984",
-    "content-hash": "e1929a97e872bdbaacc8530468eccb67",
+    "hash": "e3d959dedbca5d1bcf4ae95961c560c6",
+    "content-hash": "118a1047ee6ca9b54e0e5ccb48f964e3",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -351,6 +351,52 @@
                 "mailer"
             ],
             "time": "2016-05-01 08:45:47"
+        },
+        {
+            "name": "yarcode/yii2-base",
+            "version": "0.3.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yarcode/yii2-base.git",
+                "reference": "0ef9b01d8c58299147cd44fd12562899caef7c88"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yarcode/yii2-base/zipball/0ef9b01d8c58299147cd44fd12562899caef7c88",
+                "reference": "0ef9b01d8c58299147cd44fd12562899caef7c88",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0",
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "yarcode\\base\\": "./src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Valentin Konusov",
+                    "email": "rlng-krsk@yandex.ru",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Alexey Samoylov",
+                    "email": "alexey.samoylov@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Useful Yii2 base components",
+            "keywords": [
+                "yii2"
+            ],
+            "time": "2016-05-16 08:34:25"
         },
         {
             "name": "yiisoft/yii2",
