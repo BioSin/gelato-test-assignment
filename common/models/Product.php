@@ -79,7 +79,7 @@ class Product extends ActiveRecord implements Chargeable
      * @param int $currencyId
      * @return float
      */
-    public function getExchangedCost($currencyId = Currency::ID_BASE)
+    public function getConvertedCost($currencyId = Currency::ID_BASE)
     {
         return CurrencyConverter::convert($this, $currencyId);
     }
