@@ -11,7 +11,8 @@ return [
         'pricingManager' => [
             'class' => \common\pricing\PricingManager::className(),
             'strategies' => [
-                \common\pricing\strategies\FixedPriceForQty::class
+                \common\pricing\strategies\FixedPriceForQty::class,
+                \common\pricing\strategies\PurchaseNGetOne::class
             ]
         ]
     ],
