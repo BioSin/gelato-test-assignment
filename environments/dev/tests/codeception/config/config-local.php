@@ -2,7 +2,7 @@
 return [
     'components' => [
         'db' => [
-            'dsn' => 'mysql:host=mysql_test;dbname=gelato_test',
+            'dsn' => 'mysql:host=localhost;dbname=gelato_test',
             'username' => 'root',
             'password' => '',
             'charset' => 'utf8',
