@@ -134,6 +134,10 @@ class Currency extends \yarcode\base\ActiveRecord
             $model = static::findBySystemName($currency);
         }
 
+        if(is_null($currency)) {
+            $model = static::findOne(static::ID_BASE);
+        }
+        
         if(null === $model) {
             throw new \InvalidArgumentException(Yii::t('exceptions', 'Invalid currency'));
         }

@@ -2,6 +2,8 @@
 
 namespace common\models;
 
+use common\core\components\CurrencyConverter;
+use common\core\interfaces\Chargeable;
 use common\models\query\ProductQuery;
 use yarcode\base\ActiveRecord;
 use Yii;
@@ -15,7 +17,7 @@ use Yii;
  * @property integer $measure_unit
  * @property string $price
  */
-class Product extends ActiveRecord
+class Product extends ActiveRecord implements Chargeable
 {
     /**
      * @inheritdoc
@@ -59,5 +61,26 @@ class Product extends ActiveRecord
     public static function find()
     {
         return new ProductQuery(get_called_class());
+    }
+
+    /**
+     * Return product price in base currency cost
+     * 
+     * @return string
+     */
+    public function getCost()
+    {
+        return $this->price;
+    }
+
+    /**
+     * Return product price converted currency cost 
+     * 
+     * @param int $currencyId
+     * @return float
+     */
+    public function getExchangedCost($currencyId = Currency::ID_BASE)
+    {
+        return CurrencyConverter::convert($this, $currencyId);
     }
 }
