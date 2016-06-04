@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\query\ProductQuery;
 use yarcode\base\ActiveRecord;
 use Yii;
 
