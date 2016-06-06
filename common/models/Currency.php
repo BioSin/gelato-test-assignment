@@ -78,18 +78,21 @@ class Currency extends \yarcode\base\ActiveRecord
      * @param $from
      * @param $to
      * @param $amount
+     * @param $date
      * @return float
      */
-    public static function exchange($from, $to, $amount)
+    public static function exchange($from, $to, $amount, \DateTime $date = null)
     {
         if ($to == $from) {
             return $amount;
         }
 
-        $rates = static::getTodayRates();
+        $rates = (null === $date)
+            ? static::getTodayRates()
+            : static::getRates($date);
 
         if (!array_key_exists($from, $rates) || !array_key_exists($to, $rates)) {
-            throw new \LogicException("Unknown currency: from({$from}) or to ({$to})");
+            throw new \LogicException("Unknown currency or no rate for date: from({$from}) or to ({$to})");
         }
 
         return $amount * $rates[$to] / $rates[$from];
@@ -100,8 +103,20 @@ class Currency extends \yarcode\base\ActiveRecord
      */
     public static function getTodayRates()
     {
+        $today = DateTimeHelper::getNow();
+        return static::getRates($today);
+    }
+
+    /**
+     * Return rates for specified date
+     *
+     * @param \DateTime $date
+     * @return array
+     */
+    public static function getRates(\DateTime $date)
+    {
         return CurrencyRate::find()->indexBy('currency_id')->select('rate')->andWhere([
-            'day' => DateTimeHelper::getNow()->format(DateTimeHelper::FORMAT_SQL_DATE)
+            'day' => $date->format(DateTimeHelper::FORMAT_SQL_DATE)
         ])->asArray()->column();
     }
 
@@ -133,13 +148,9 @@ class Currency extends \yarcode\base\ActiveRecord
         if(is_string($currency)) {
             $model = static::findBySystemName($currency);
         }
-
-        if(is_null($currency)) {
-            $model = static::findOne(static::ID_BASE);
-        }
         
         if(null === $model) {
-            throw new \InvalidArgumentException(Yii::t('exceptions', 'Invalid currency'));
+            throw new \InvalidArgumentException(Yii::t('app', 'Invalid currency'));
         }
         
         return $model;
