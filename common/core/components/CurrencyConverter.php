@@ -19,14 +19,16 @@ class CurrencyConverter extends Component
      * @param Chargeable $model
      * @param Currency|integer|string $to
      * @param Currency|integer|string|null $from
+     * @param \DateTime|null $date
      * @return float
      */
-    public static function convert(Chargeable $model, $to, $from = null)
+    public static function convert(Chargeable $model, $to, $from = Currency::ID_BASE, \DateTime $date = null)
     {
         return static::convertInternal(
             Currency::resolve($from)->id,
             Currency::resolve($to)->id,
-            $model->getCost()
+            $model->getCost(),
+            $date
         );
     }
 
@@ -34,14 +36,21 @@ class CurrencyConverter extends Component
      * @param $amount
      * @param Currency|integer|string $to
      * @param Currency|integer|string|null $from
+     * @param \DateTime|null $date
      * @return float
      */
-    public static function convertSum($amount, $to, $from = null)
+    public static function convertSum($amount, $to, $from = Currency::ID_BASE, \DateTime $date = null)
     {
+
+        if(!is_numeric($amount)) {
+            throw new \LogicException("Amount should be numeric");
+        }
+
         return static::convertInternal(
             Currency::resolve($from)->id,
             Currency::resolve($to)->id,
-            $amount
+            (float)$amount,
+            $date
         );
     }
 
@@ -49,14 +58,16 @@ class CurrencyConverter extends Component
      * @param integer $from
      * @param integer $to
      * @param $sum
+     * @param \DateTime|null $date
      * @return float
      */
-    protected static function convertInternal($from, $to, $sum)
+    protected static function convertInternal($from, $to, $sum, \DateTime $date = null)
     {
         return Currency::exchange(
             $from,
             $to,
-            $sum
+            $sum,
+            $date
         );
     }
 }
